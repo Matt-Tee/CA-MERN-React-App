@@ -1,9 +1,11 @@
 import React from 'react';
-import './App.css';
 
 function App() {
   return (
-    <div><h1>This is the front end</h1></div>
+    <div>
+      <p>Login through discord goes here</p>
+    </div>
+
   );
 }
 
