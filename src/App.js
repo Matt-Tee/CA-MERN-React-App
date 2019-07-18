@@ -1,11 +1,18 @@
 import React from 'react';
+import Points from './components/Points';
+import Logs from './components/Logs';
+import { Route, BrowserRouter as Router } from 'react-router-dom'
+import GreenbotNavbar from './components/Navbar';
 
 function App() {
   return (
-    <div>
-      <p>Login through discord goes here</p>
-    </div>
-
+    <Router>
+      <div>
+        <Route path="/" component={GreenbotNavbar} />
+        <Route path="/point_tables" component={Points} />
+        <Route path="/logs" component={Logs} />
+      </div>
+    </Router>
   );
 }
 
