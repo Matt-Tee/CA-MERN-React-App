@@ -8,6 +8,7 @@ const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.c
 export default function Points() {
 
   const [users, setUsers] = useState(null)
+  const [newPoints, setNewPoints] = useState([])
 
   useEffect(() => {
     dataAPI.get('/').then(response => { setUsers(response.data) })
@@ -16,7 +17,7 @@ export default function Points() {
 
   function loading() {
     return (
-      <tr><td colSpan="3">Loading...</td></tr>
+      <tr><td colSpan="5">Loading...</td></tr>
     )
   }
 
@@ -26,8 +27,6 @@ export default function Points() {
     let sortedUsers = [].concat(users).sort((a, b) => {
       return parseInt(b.points) - parseInt(a.points);
     });
-    console.log(sortedUsers)
-
     setUsers(sortedUsers);
   }
 
@@ -47,8 +46,30 @@ export default function Points() {
     setUsers(sortedUsers);
   }
 
-  function renderData(data) {
+  const deleteUser = async (event, user_id, index) => {
+    event.preventDefault()
+    await dataAPI.delete(`/users/${user_id}`)
+    let state = users
+    setUsers(state.splice(index, 1))
+  }
 
+  const updatePoints = async (event, index, user_id,) => {
+    event.preventDefault()
+    await dataAPI.patch(`/users/${user_id}/points`, {
+      points: ((0-users[index].points) + parseInt(newPoints[index]))
+    })
+    let state = [...users]
+    state[index].points = parseInt(newPoints[index])
+    setUsers(state)
+  }
+
+  const handleChange = (event, index) => {
+    let state = newPoints
+    state[index] = event.target.value
+    setNewPoints(state)
+  }
+
+  function renderData(data) {
     return (data.map((user, index) => {
       const { user_id, username, points } = user
       return (
@@ -56,6 +77,12 @@ export default function Points() {
           <td>{user_id}</td>
           <td>{username}</td>
           <td>{points}</td>
+          <td><button onClick={(event) => deleteUser(event, user_id, index)}>X</button></td>
+          <td>
+            <form onSubmit={(event) => updatePoints(event, index, user_id)}>
+              <input style={{width: '100px'}} value={newPoints[index]} onChange={(event) => handleChange(event, index)}/>
+            </form>
+          </td>
         </tr>
       )
     }))
@@ -72,6 +99,8 @@ export default function Points() {
             <th >ID</th>
             <th>Username</th>
             <th>Points</th>
+            <th>Delete</th>
+            <th>Update Points</th>
           </tr>
         </thead>
         <tbody>
