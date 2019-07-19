@@ -3,7 +3,6 @@ import Points from './components/Points';
 import Logs from './components/Logs';
 import { Route, BrowserRouter as Router, Link, Redirect } from 'react-router-dom'
 import GreenbotNavbar from './components/Navbar';
-import TakeParams from './TakeParams'
 import cookie from 'react-cookie'
 
 
@@ -23,6 +22,10 @@ function App() {
     setAuthed(isAuthed)
   }
 
+  // useEffect() {
+  //   setNewAuthed(readCookie)
+  // }
+
   return (
     <Router>
       {authed ? (
@@ -34,7 +37,8 @@ function App() {
       ) : (
         <div>
           <Route path='/' render={() => window.location = `http://localhost:5000/api/discord/login`} />
-          <Route exact path="/api/discord/confirmed" render={(props) => <TakeParams {...props} setAuthed={setNewAuthed} />} />
+          <Route exact path="/api/discord/confirmed" render={() => {setNewAuthed(readCookie)}} />
+
         </div>
       )}
     </Router>
