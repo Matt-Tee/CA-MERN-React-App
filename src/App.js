@@ -3,16 +3,12 @@ import Points from './components/Points';
 import Logs from './components/Logs';
 import { Route, BrowserRouter as Router, Link, Redirect } from 'react-router-dom'
 import GreenbotNavbar from './components/Navbar';
+import TakeParams from './TakeParams'
 import cookie from 'react-cookie'
 
 
 function readCookie() {
-  const cValue = cookie.load('rememberme')
-  if (cValue == 1) {
-    return true
-  } else {
-    return false
-  }
+  return cookie.load('authorized')
 }
 
 function App() {
@@ -21,10 +17,6 @@ function App() {
   const setNewAuthed = (isAuthed) => {
     setAuthed(isAuthed)
   }
-
-  // useEffect() {
-  //   setNewAuthed(readCookie)
-  // }
 
   return (
     <Router>
@@ -36,8 +28,9 @@ function App() {
         </div>
       ) : (
         <div>
-          <Route path='/' render={() => window.location = `https://stormy-tundra-35633.herokuapp.com/api/discord/login`} />
-          <Route path="/api/discord/confirmed" render={() => {setNewAuthed(readCookie)}} />
+          <Link to="/api/discord/login"><button>Take me to discord</button></Link>
+          <Route exact path='/api/discord/login' render={() => window.location = `https://stormy-tundra-35633.herokuapp.com/api/discord/login`} />
+          <Route path="/api/discord/confirmed/:token" render={(props) => <TakeParams {...props} setAuthed={setNewAuthed} /> } />
         </div>
       )}
     </Router>
