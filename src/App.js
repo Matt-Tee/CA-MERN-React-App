@@ -37,8 +37,7 @@ function App() {
       ) : (
         <div>
           <Route path='/' render={() => window.location = `https://stormy-tundra-35633.herokuapp.com/api/discord/login`} />
-          <Route exact path="/api/discord/confirmed" render={() => {setNewAuthed(readCookie)}} />
-
+          <Route path="/api/discord/confirmed" render={() => {setNewAuthed(readCookie)}} />
         </div>
       )}
     </Router>
