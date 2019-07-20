@@ -48,9 +48,13 @@ export default function Points() {
 
   const deleteUser = async (event, user_id, index) => {
     event.preventDefault()
-    await dataAPI.delete(`/users/${user_id}`)
-    let state = users
-    setUsers(state.splice(index, 1))
+    const confirmation = window.confirm("are you sure you want to ruin this man's whole career?")
+    if (confirmation) {
+      await dataAPI.delete(`/users/${user_id}`)
+      let state = [...users]
+      state.splice(index, 1)
+      setUsers(state)
+    }
   }
 
   const updatePoints = async (event, index, user_id,) => {
