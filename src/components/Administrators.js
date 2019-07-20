@@ -3,7 +3,9 @@ import { Container, Section, Table, Button, Field, Control, Input, Label, Select
 import axios from 'axios';
 import NewUser from './NewUser'
 
-const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/AuthUsers' });
+const dataAPI = axios.create({ baseURL: 'http://localhost:5000/authUsers' });
+
+// const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/AuthUsers' });
 
 
 function Administrators() {
@@ -25,9 +27,6 @@ function Administrators() {
 
   useEffect(() => {
     getAllUsers()
-    // dataAPI.get('/').then(response => { setUsers(response.data);
-    // setFilteredUsers(response.data) })
-
     // setUsers([{user_id: 12335, username: 'bob', points: 5},{user_id: 35790, username: 'sarah', points: 12},{user_id: 734623, username: 'tommy', points: 7},{user_id: 67236, username: 'nubnub', points: 1},{user_id: 235789342, username: 'samuel', points: 3}])
   }, []);
 
@@ -35,15 +34,6 @@ function Administrators() {
     return (
       <tr><td colSpan="5">Loading...</td></tr>
     )
-  }
-
-  function sortByPoints(e) {
-    e.preventDefault();
-
-    let sortedUsers = [].concat(users).sort((a, b) => {
-      return parseInt(b.points) - parseInt(a.points);
-    });
-    setUsers(sortedUsers);
   }
 
   function sortById(e) {
@@ -66,23 +56,9 @@ function Administrators() {
     event.preventDefault()
     const confirmation = window.confirm("are you sure you want to ruin this man's whole career?")
     if (confirmation) {
-      await dataAPI.delete(`/users/${user_id}`)
+      await dataAPI.delete(`/${user_id}`)
       getAllUsers()
     }
-  }
-
-  const updatePoints = async (event, index, user_id,) => {
-    event.preventDefault()
-    await dataAPI.patch(`/users/${user_id}/points`, {
-      points: ((0-users[index].points) + parseInt(newPoints[index]))
-    })
-    getAllUsers()
-  }
-
-  const handleChange = (event, index) => {
-    let state = [...newPoints]
-    state[index] = event.target.value
-    setNewPoints(state)
   }
 
   function updateFilter(e) {
@@ -106,13 +82,7 @@ function Administrators() {
         <tr key={index}>
           <td>{user_id}</td>
           <td>{username}</td>
-          <td>{points}</td>
           <td><button onClick={(event) => deleteUser(event, user_id, index)}>X</button></td>
-          <td>
-            <form onSubmit={(event) => updatePoints(event, index, user_id)}>
-              <input style={{width: '100px'}} value={newPoints[index]} onChange={(event) => handleChange(event, index)}/>
-            </form>
-          </td>
         </tr>
       )
     }))
@@ -136,22 +106,19 @@ function Administrators() {
 
         <Button isColor="primary" onClick={sortById}>ID</Button>
         <Button isColor="primary" onClick={sortByUsername}>Username</Button>
-        <Button isColor="primary" onClick={sortByPoints}>Points</Button>
         <Table isBordered isStriped>
           <thead>
             <tr>
               <th >ID</th>
               <th>Username</th>
-              <th>Points</th>
               <th>Delete</th>
-              <th>Update Points</th>
             </tr>
           </thead>
           <tbody>
             {!filteredUsers ? loading() : renderData(filteredUsers)}
           </tbody>
         </Table>
-        <NewUser getAllUsers={getAllUsers}/>
+        <NewUser getAllUsers={getAllUsers} user='Admin' uri='authUsers'/>
       </Container>
     </Section>
   )
