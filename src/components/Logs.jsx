@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Table } from 'bloomer';
+import { Table, Field, Control, Input, Label, Select } from 'bloomer';
 import bulma from 'bulma';
 import axios from 'axios';
 const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/' });
 
 export default function Logs() {
   const [logs, setLogs] = useState(null)
+  const [filter, setFilter] = useState('')
+  const [filteredLogs, setFilteredLogs] = useState(null)
+  const [searchBy, setSearchBy] = useState('User ID')
 
   useEffect(() => {
-    dataAPI.get('/logs').then(response => { setLogs(response.data.sort((a, b) => {
-      return parseInt(new Date(b.time).getTime()) - parseInt(new Date(a.time).getTime());
-    })) })
+    dataAPI.get('/logs').then(response => {
+      let sortedLogs = response.data.sort((a, b) => {
+        return parseInt(new Date(b.time).getTime()) - parseInt(new Date(a.time).getTime());
+      });
+      setLogs(sortedLogs);
+      setFilteredLogs(sortedLogs);
+    })
   }, []);
 
   function loading() {
@@ -19,13 +26,26 @@ export default function Logs() {
     )
   }
 
-  function renderData() {
-    let data = logs;
+  function updateFilter(e){
+    setFilter(e.target.value)
+    if (searchBy === 'User ID'){
+    setFilteredLogs(logs.filter(log => log.user.includes(e.target.value)))}
+    else if (searchBy === 'Time'){
+    setFilteredLogs(logs.filter(log => (new Date(log.time).toUTCString()).includes(e.target.value)))
+    }
+  }
+  
+  function updateSearchBy(value){
+    setSearchBy(value)
+  }
+
+  function renderData(data) {
+    console.log(data)
     return (data.map((log, index) => {
-      const { time, action, user } = log
+      var { time, action, user } = log
       return (
         <tr key={index}>
-          <td>{time}</td>
+          <td>{new Date(time).toUTCString()}</td>
           <td>{action}</td>
           <td>{user}</td>
         </tr>
@@ -35,6 +55,18 @@ export default function Logs() {
 
   return (
     <div>
+      <Field isGrouped>
+        <Control>
+          <Input type="text" value={filter} onChange={(e) => updateFilter(e)}/>
+        </Control>
+        <Label>Search by:</Label>
+        <Control>
+          <Select value={searchBy} onChange={(e) => updateSearchBy(e.target.value)}>
+            <option>User ID</option>
+            <option>Time</option>
+          </Select>
+        </Control>
+      </Field>
       <Table isBordered isStriped>
         <thead>
           <tr>
@@ -44,7 +76,7 @@ export default function Logs() {
           </tr>
         </thead>
         <tbody>
-          {!logs ? loading() : renderData()}
+          {!filteredLogs ? loading() : renderData(filteredLogs)}
         </tbody>
       </Table>
     </div>
