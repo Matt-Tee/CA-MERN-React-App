@@ -3,9 +3,9 @@ import { Container, Section, Table, Button, Field, Control, Input, Label, Select
 import axios from 'axios';
 import NewUser from './NewUser'
 
-const dataAPI = axios.create({ baseURL: 'http://localhost:5000/authUsers' });
+const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/AuthUsers' });
 
-// const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/AuthUsers' });
+// const dataAPI = axios.create({ baseURL: 'http://localhost:5000/authUsers' });
 
 
 function Administrators() {
