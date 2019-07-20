@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Section, FieldLabel, FieldBody, Table, Button, Field, Control, Input, Label, Select } from 'bloomer';
+import { Icon, Container, Section, FieldLabel, FieldBody, Table, Button, Field, Control, Input, Label, Select } from 'bloomer';
+import NewUser from './NewUser'
 import bulma from 'bulma';
 import axios from 'axios';
 const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/' });
@@ -13,9 +14,20 @@ export default function Points() {
   const [searchBy, setSearchBy] = useState('Username')
   const [filteredUsers, setFilteredUsers] = useState(null)
 
+  const getAllUsers = () => {
+    dataAPI.get('/')
+      .then(response => {
+        setUsers(response.data);
+        setFilteredUsers(response.data)
+      }
+    )
+  }
+
   useEffect(() => {
-    dataAPI.get('/').then(response => { setUsers(response.data);
-    setFilteredUsers(response.data) })
+    getAllUsers()
+    // dataAPI.get('/').then(response => { setUsers(response.data);
+    // setFilteredUsers(response.data) })
+
     // setUsers([{user_id: 12335, username: 'bob', points: 5},{user_id: 35790, username: 'sarah', points: 12},{user_id: 734623, username: 'tommy', points: 7},{user_id: 67236, username: 'nubnub', points: 1},{user_id: 235789342, username: 'samuel', points: 3}])
   }, []);
 
@@ -55,9 +67,7 @@ export default function Points() {
     const confirmation = window.confirm("are you sure you want to ruin this man's whole career?")
     if (confirmation) {
       await dataAPI.delete(`/users/${user_id}`)
-      let state = [...users]
-      state.splice(index, 1)
-      setUsers(state)
+      getAllUsers()
     }
   }
 
@@ -66,13 +76,11 @@ export default function Points() {
     await dataAPI.patch(`/users/${user_id}/points`, {
       points: ((0-users[index].points) + parseInt(newPoints[index]))
     })
-    let state = [...users]
-    state[index].points = parseInt(newPoints[index])
-    setUsers(state)
+    getAllUsers()
   }
 
   const handleChange = (event, index) => {
-    let state = newPoints
+    let state = [...newPoints]
     state[index] = event.target.value
     setNewPoints(state)
   }
@@ -143,15 +151,8 @@ export default function Points() {
             {!filteredUsers ? loading() : renderData(filteredUsers)}
           </tbody>
         </Table>
+        <NewUser getAllUsers={getAllUsers}/>
       </Container>
     </Section>
   );
 }
-
-// <form>
-// <h5>New User</h5>
-// <label></label>
-// <input />
-// <label>Username</label>
-// <input />
-// </form>
