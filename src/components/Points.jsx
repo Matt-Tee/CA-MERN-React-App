@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Field, Control, Input, Label, Select } from 'bloomer';
+import { Container, Section, FieldLabel, FieldBody, Table, Button, Field, Control, Input, Label, Select } from 'bloomer';
 import bulma from 'bulma';
 import axios from 'axios';
 const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/' });
@@ -76,7 +76,7 @@ export default function Points() {
     state[index] = event.target.value
     setNewPoints(state)
   }
-  
+
   function updateFilter(e) {
     setFilter(e.target.value)
     if (searchBy === 'Username') {
@@ -111,37 +111,47 @@ export default function Points() {
   }
 
   return (
-    <div>
-      <Field isGrouped>
-        <Control>
-          <Input type="text" value={filter} onChange={(e) => updateFilter(e)} />
-        </Control>
-        <Label>Search by:</Label>
-        <Control>
-          <Select value={searchBy} onChange={(e) => updateSearchBy(e.target.value)}>
-            <option>Username</option>
-            <option>ID</option>
-          </Select>
-        </Control>
-      </Field>
+    <Section>
+      <Container>
+        <Field isGrouped>
+          <Control>
+            <Input type="text" value={filter} onChange={(e) => updateFilter(e)} />
+          </Control>
+          <Label>Search by:</Label>
+          <Control>
+            <Select value={searchBy} onChange={(e) => updateSearchBy(e.target.value)}>
+              <option>Username</option>
+              <option>ID</option>
+            </Select>
+          </Control>
+        </Field>
 
-      <Button isColor="primary" onClick={sortById}>ID</Button>
-      <Button isColor="primary" onClick={sortByUsername}>Username</Button>
-      <Button isColor="primary" onClick={sortByPoints}>Points</Button>
-      <Table isBordered isStriped>
-        <thead>
-          <tr>
-            <th >ID</th>
-            <th>Username</th>
-            <th>Points</th>
-            <th>Delete</th>
-            <th>Update Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          {!filteredUsers ? loading() : renderData(filteredUsers)}
-        </tbody>
-      </Table>
-    </div>
+        <Button isColor="primary" onClick={sortById}>ID</Button>
+        <Button isColor="primary" onClick={sortByUsername}>Username</Button>
+        <Button isColor="primary" onClick={sortByPoints}>Points</Button>
+        <Table isBordered isStriped>
+          <thead>
+            <tr>
+              <th >ID</th>
+              <th>Username</th>
+              <th>Points</th>
+              <th>Delete</th>
+              <th>Update Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!filteredUsers ? loading() : renderData(filteredUsers)}
+          </tbody>
+        </Table>
+      </Container>
+    </Section>
   );
 }
+
+// <form>
+// <h5>New User</h5>
+// <label></label>
+// <input />
+// <label>Username</label>
+// <input />
+// </form>
