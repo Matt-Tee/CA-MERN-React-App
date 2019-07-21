@@ -43,6 +43,7 @@ export default function Points() {
       return parseInt(b.points) - parseInt(a.points);
     });
     setUsers(sortedUsers);
+    sortFilter(sortedUsers);
   }
 
   function sortById(e) {
@@ -51,6 +52,7 @@ export default function Points() {
       return parseInt(a.user_id) - parseInt(b.user_id);
     });
     setUsers(sortedUsers);
+    sortFilter(sortedUsers);
   }
 
   function sortByUsername(e) {
@@ -59,6 +61,7 @@ export default function Points() {
       return a.username.localeCompare(b.username);
     });
     setUsers(sortedUsers);
+    sortFilter(sortedUsers);
   }
 
   const deleteUser = async (event, user_id, index) => {
@@ -91,6 +94,15 @@ export default function Points() {
     }
     else if (searchBy === 'ID') {
       setFilteredUsers(users.filter(user => user.user_id.includes(e.target.value)))
+    }
+  }
+
+  function sortFilter(sortedData){
+    if (searchBy === 'Username') {
+      setFilteredUsers(sortedData.filter(user => user.username.includes(filter)))
+    }
+    else if (searchBy === 'ID') {
+      setFilteredUsers(sortedData.filter(user => user.user_id.includes(filter)))
     }
   }
 
