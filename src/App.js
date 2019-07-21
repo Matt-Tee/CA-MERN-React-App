@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import Points from './components/Points';
 import Logs from './components/Logs';
-import { Route, BrowserRouter as Router, Link, Redirect } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Link } from 'react-router-dom'
 import GreenbotNavbar from './components/Navbar';
 import TakeParams from './TakeParams'
+import Administrators from './components/Administrators'
+import DiscordButton from './components/DiscordButton'
 import cookie from 'react-cookie'
 
 
@@ -12,7 +14,7 @@ function readCookie() {
 }
 
 function App() {
-  const [authed, setAuthed] = useState(true)
+  const [authed, setAuthed] = useState(readCookie)
 
   const setNewAuthed = (isAuthed) => {
     setAuthed(isAuthed)
@@ -20,16 +22,21 @@ function App() {
 
   return (
     <Router>
+    <Route path="/" component={GreenbotNavbar} />
       {authed ? (
         <div>
-          <Route path="/" component={GreenbotNavbar} />
           <Route path="/point_tables" component={Points} />
           <Route path="/logs" component={Logs} />
+          <Route path="/administrators" component={Administrators} />
         </div>
       ) : (
         <div>
-          <Link to="/api/discord/login"><button>Take me to discord</button></Link>
-          <Route exact path='/api/discord/login' render={() => window.location = `https://stormy-tundra-35633.herokuapp.com/api/discord/login`} />
+          <Link to="/api/discord/login"><DiscordButton /></Link>
+          <Route exact path='/api/discord/login' render={() => (
+            <div style={{display: 'none'}}>
+              {window.location = `https://stormy-tundra-35633.herokuapp.com/api/discord/login`}
+            </div>
+          )}/>
           <Route path="/api/discord/confirmed/:token" render={(props) => <TakeParams {...props} setAuthed={setNewAuthed} /> } />
         </div>
       )}

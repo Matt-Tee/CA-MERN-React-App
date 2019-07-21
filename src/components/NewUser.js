@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { Field, Label, FieldBody, Control, Input, Button } from 'bloomer'
 import 'bulma'
 import axios from 'axios'
-const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/' });
+const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com' });
 
 
 function NewUser(props) {
@@ -12,7 +12,8 @@ function NewUser(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    dataAPI.post('/users', {
+    console.log(dataAPI.defaults.baseURL);
+    dataAPI.post(`/${props.uri}`, {
       user_id: userId,
       username: username,
       points: 1
@@ -21,7 +22,7 @@ function NewUser(props) {
       props.getAllUsers()
       })
       .catch(error => {
-        //handle error
+        console.log(error);
         console.log('this is a error');
       })
   }
@@ -41,7 +42,7 @@ function NewUser(props) {
   return (
     <form onSubmit={handleSubmit}>
       <Field>
-        <Label>New User</Label>
+        <Label>New {props.user}</Label>
       </Field>
       <FieldBody>
         <Field isGrouped>

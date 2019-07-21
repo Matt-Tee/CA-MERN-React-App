@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Icon, Container, Section, FieldLabel, FieldBody, Table, Button, Field, Control, Input, Label, Select } from 'bloomer';
+import { Container, Section, Table, Button, Field, Control, Input, Label, Select } from 'bloomer';
 import NewUser from './NewUser'
-import bulma from 'bulma';
 import axios from 'axios';
-const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/' });
+const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com' });
 
 
 export default function Points() {
@@ -151,7 +150,7 @@ export default function Points() {
             {!filteredUsers ? loading() : renderData(filteredUsers)}
           </tbody>
         </Table>
-        <NewUser getAllUsers={getAllUsers}/>
+        <NewUser getAllUsers={getAllUsers} user='User' uri='users'/>
       </Container>
     </Section>
   );

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Field, Control, Input, Label, Select } from 'bloomer';
-import bulma from 'bulma';
 import axios from 'axios';
 const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/' });
 
@@ -34,7 +33,7 @@ export default function Logs() {
     setFilteredLogs(logs.filter(log => (new Date(log.time).toUTCString()).includes(e.target.value)))
     }
   }
-  
+
   function updateSearchBy(value){
     setSearchBy(value)
   }
