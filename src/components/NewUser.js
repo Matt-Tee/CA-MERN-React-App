@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { Field, Label, FieldBody, Control, Input, Button } from 'bloomer'
 import 'bulma'
 import axios from 'axios'
-const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com' });
+
+let dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com' });
+dataAPI.defaults.headers.common["Content-Type"] = 'application/json'
+
 
 
 function NewUser(props) {
