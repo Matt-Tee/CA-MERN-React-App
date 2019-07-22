@@ -1,4 +1,4 @@
 
-# Totally not part of a MERN project
+# CA-MERN-project 
 
-## Just a bit of discrete react work
+Part of a larger project completed as part of assesment for CoderAcademy
