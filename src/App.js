@@ -31,7 +31,12 @@ function App() {
         </div>
       ) : (
         <div>
-          <a href="https://elated-lovelace-d9b735.netlify.com/api/discord/login"><DiscordButton /></a>
+          <Link to="/api/discord/login"><DiscordButton /></Link>
+          <Route exact path='/api/discord/login' render={() => (
+            <div style={{display: 'none'}}>
+              {window.location = `https://stormy-tundra-35633.herokuapp.com/api/discord/login`}
+            </div>
+          )}/>
           <Route path="/api/discord/confirmed/:token" render={(props) => <TakeParams {...props} setAuthed={setNewAuthed} /> } />
         </div>
       )}
