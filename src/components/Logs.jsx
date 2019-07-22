@@ -8,6 +8,7 @@ export default function Logs() {
   const [filter, setFilter] = useState('')
   const [filteredLogs, setFilteredLogs] = useState(null)
   const [searchBy, setSearchBy] = useState('User ID')
+  const [filteredBy, setFilteredBy] = useState('All')
 
   useEffect(() => {
     dataAPI.get('/logs').then(response => {
@@ -25,22 +26,28 @@ export default function Logs() {
     )
   }
 
-  function updateFilter(e){
+  function updateFilter(e) {
     setFilter(e.target.value)
-    if (searchBy === 'User ID'){
-    setFilteredLogs(logs.filter(log => log.user.includes(e.target.value)))}
-    else if (searchBy === 'Time'){
-    setFilteredLogs(logs.filter(log => (new Date(log.time).toUTCString()).includes(e.target.value)))
+    if (searchBy === 'User ID') {
+      setFilteredLogs(logs.filter(log => log.user.includes(e.target.value)))
+    }
+    else if (searchBy === 'Time') {
+      setFilteredLogs(logs.filter(log => (new Date(log.time).toUTCString()).includes(e.target.value)))
     }
   }
+  
+  function updateFilteredBy(value) {
+    setFilteredBy(value)
+  }
 
-  function updateSearchBy(value){
+  function updateSearchBy(value) {
     setSearchBy(value)
   }
 
   function renderData(data) {
     console.log(data)
-    return (data.map((log, index) => {
+     if (!filteredBy == 'All') {data = data.filter(d => d.action.includes(filteredBy.toLowerCase()))}
+     return data.map((log, index) => {
       var { time, action, user } = log
       return (
         <tr key={index}>
@@ -49,20 +56,31 @@ export default function Logs() {
           <td>{user}</td>
         </tr>
       )
-    }))
+    })
   }
 
   return (
     <div>
       <Field isGrouped>
         <Control>
-          <Input type="text" value={filter} onChange={(e) => updateFilter(e)}/>
+          <Input type="text" value={filter} onChange={(e) => updateFilter(e)} />
         </Control>
         <Label>Search by:</Label>
         <Control>
           <Select value={searchBy} onChange={(e) => updateSearchBy(e.target.value)}>
             <option>User ID</option>
             <option>Time</option>
+          </Select>
+        </Control>
+      </Field>
+      <Field isGrouped>
+        <Label>Actions:</Label>
+        <Control>
+          <Select value={filteredBy} onChange={(e) => updateFilteredBy(e.target.value)}>
+            <option>All</option>
+            <option>New</option>
+            <option>Update</option>
+            <option>Delete</option>
           </Select>
         </Control>
       </Field>
