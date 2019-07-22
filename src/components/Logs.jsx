@@ -47,7 +47,7 @@ export default function Logs() {
   function renderData(data) {
     console.log(data)
      if (!filteredBy == 'All') {data = data.filter(d => d.action.includes(filteredBy.toLowerCase()))}
-     return data.map((log, index) => {
+     return (data.map((log, index) => {
       var { time, action, user } = log
       return (
         <tr key={index}>
@@ -56,7 +56,7 @@ export default function Logs() {
           <td>{user}</td>
         </tr>
       )
-    })
+    }))
   }
 
   return (
