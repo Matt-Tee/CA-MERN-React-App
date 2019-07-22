@@ -14,7 +14,6 @@ dataAPI.defaults.headers.common["Content-Type"] = 'application/json'
 function Administrators() {
 
   const [users, setUsers] = useState(null)
-  const [newPoints, setNewPoints] = useState([])
   const [filter, setFilter] = useState('')
   const [searchBy, setSearchBy] = useState('Username')
   const [filteredUsers, setFilteredUsers] = useState(null)
@@ -28,8 +27,10 @@ function Administrators() {
     )
   }
 
+  // When component loads get the users!
   useEffect(() => {
     getAllUsers()
+    // testing data
     // setUsers([{user_id: 12335, username: 'bob', points: 5},{user_id: 35790, username: 'sarah', points: 12},{user_id: 734623, username: 'tommy', points: 7},{user_id: 67236, username: 'nubnub', points: 1},{user_id: 235789342, username: 'samuel', points: 3}])
   }, []);
 
@@ -80,7 +81,7 @@ function Administrators() {
 
   function renderData(data) {
     return (data.map((user, index) => {
-      const { user_id, username, points } = user
+      const { user_id, username} = user
       return (
         <tr key={index}>
           <td>{user_id}</td>
