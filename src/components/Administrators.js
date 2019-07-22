@@ -4,6 +4,7 @@ import axios from 'axios';
 import NewUser from './NewUser'
 
 const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/AuthUsers' });
+dataAPI.defaults.headers.common["Content-Type"] = 'application/json'
 
 // const dataAPI = axios.create({ baseURL: 'http://localhost:5000/authUsers' });
 
