@@ -17,7 +17,7 @@ export default function Points() {
   const [filteredUsers, setFilteredUsers] = useState(null)
 
   const getAllUsers = () => {
-    dataAPI.get('/')
+    dataAPI.get('/users')
       .then(response => {
         setUsers(response.data);
         setFilteredUsers(response.data)
