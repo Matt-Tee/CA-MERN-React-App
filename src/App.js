@@ -28,7 +28,6 @@ function App() {
           <Route path="/point_tables" component={Points} />
           <Route path="/logs" component={Logs} />
           <Route path="/administrators" component={Administrators} />
-          <Route path="/api/discord/confirmed/:token" render={(props) => <TakeParams {...props} setAuthed={setNewAuthed} /> } />
         </div>
       ) : (
         <div>
