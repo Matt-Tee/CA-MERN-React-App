@@ -119,7 +119,7 @@ export default function Points() {
     setNewPoints(state)
   }
 
-  // Applies a filter to the users state based on which search by drop down is selected and what the user puts into the search bar.
+  // Applies a filter to the users state based on which search by drop down is selected and what has been typed into the search bar.
   function updateFilter(e) {
     // Sets the filter state, however the filter state can not be used on the same tic it is set without problems
     // So the e.target.value is used instead for the rest of this function
@@ -153,10 +153,10 @@ export default function Points() {
   // Renders a row of data for each user.
   function renderData(data) {
     return (data.map((user, index) => {
-      // Deconstructs the user object into the Id and Username
+      // Deconstructs the user object into the Id, points and Username
       const { user_id, username, points } = user
       return (
-        // Index of the use in the users array used as a unique key for that user's row.
+        // Index of the user in the users array used as a unique key for that user's row.
         <tr key={index}>
           <td>{user_id}</td>
           <td>{username}</td>
@@ -204,6 +204,7 @@ export default function Points() {
             </tr>
           </thead>
           <tbody>
+          {/* Checks if the users have been fetched yet and either renders loading or the users as appropriate */}
             {!filteredUsers ? loading() : renderData(filteredUsers)}
           </tbody>
         </Table>
