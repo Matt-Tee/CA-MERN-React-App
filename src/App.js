@@ -23,7 +23,6 @@ function App() {
         <Component {...props} />
       ) : (
         <div>
-          <GreenbotNavbar />
           <Link to="/api/discord/login"><DiscordButton /></Link>
         </div>
       )
@@ -36,7 +35,12 @@ function App() {
 
   return (
     <Router>
-      <Route path="/" component={GreenbotNavbar} />
+      <Route path="/" render={() => (
+        <Fragment>
+          <GreenbotNavbar />
+          <Redirect to="/point_tables" component={Points}/>
+        </Fragment>
+      )} />
       <PrivateRoute path="/point_tables" component={Points} />
       <PrivateRoute path="/logs" component={Logs} />
       <PrivateRoute path="/administrators" component={Administrators} />
