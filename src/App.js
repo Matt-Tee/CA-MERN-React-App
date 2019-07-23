@@ -23,7 +23,6 @@ function App() {
         <Component {...props} />
       ) : (
         <div>
-          <GreenbotNavbar />
           <Link to="/api/discord/login"><DiscordButton /></Link>
         </div>
       )
