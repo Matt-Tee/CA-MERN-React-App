@@ -37,7 +37,7 @@ function Routes(props) {
           {window.location = `http://localhost:5000/api/discord/login`}
         </div>
       )}/>
-      <Route path="/api/discord/confirmed/:token" render={(props) => <TakeParams {...props} setAuthed={setNewAuthed} /> } />
+      <Route path="/api/discord/confirmed/:token" render={(props) => <TakeParams {...props} setAuthed={props.setNewAuthed} /> } />
     </Router>
   )
 }

@@ -23,7 +23,7 @@ function App() {
   }
 
   return (
-    <Routes />
+    <Routes authed={authed} setNewAuthed={setNewAuthed}/>
   )
 }
 
