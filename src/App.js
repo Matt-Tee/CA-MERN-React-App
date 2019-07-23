@@ -1,7 +1,7 @@
 import React, {useState, Component} from 'react';
 import Points from './components/Points';
 import Logs from './components/Logs';
-import { Route, BrowserRouter as Router, Link,  } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Link, Redirect  } from 'react-router-dom'
 import GreenbotNavbar from './components/Navbar';
 import TakeParams from './TakeParams'
 import Administrators from './components/Administrators'
@@ -13,18 +13,19 @@ function readCookie() {
   return cookie.load('authorized')
 }
 
-function PrivateRoute({ component: Component, ...rest }) {
-  return (
-    <Route {...rest} render={props => authed ? (
-      <Component {...props} />
-    ) : (
-      <Redirect to="/api/discord/login" />
-    )
-  } /> )
-}
 
 function App() {
   const [authed, setAuthed] = useState(readCookie)
+
+  function PrivateRoute({ component: Component, ...rest }) {
+    return (
+      <Route {...rest} render={props => authed ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/api/discord/login" />
+      )
+    } /> )
+  }
 
   const setNewAuthed = (isAuthed) => {
     setAuthed(isAuthed)
