@@ -3,21 +3,24 @@ import { Container, Section, Table, Button, Field, Control, Input, Label, Select
 import axios from 'axios';
 import NewUser from './NewUser'
 
+// Create an axios default to use for this component
 let dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/AuthUsers' });
 dataAPI.defaults.headers.common["Content-Type"] = 'application/json'
 // dataAPI.defaults.headers.common["Access"] = 'application/json'
 
-
+// For localhost testing of entire stack
 // const dataAPI = axios.create({ baseURL: 'http://localhost:5000/authUsers' });
 
 
 function Administrators() {
 
+  // Enables these states to be used in this functional component
   const [users, setUsers] = useState(null)
   const [filter, setFilter] = useState('')
   const [searchBy, setSearchBy] = useState('Username')
   const [filteredUsers, setFilteredUsers] = useState(null)
 
+  // Fetch all user data
   const getAllUsers = () => {
     dataAPI.get('/')
       .then(response => {
@@ -31,62 +34,85 @@ function Administrators() {
   useEffect(() => {
     getAllUsers()
     // testing data
-    // setUsers([{user_id: 12335, username: 'bob', points: 5},{user_id: 35790, username: 'sarah', points: 12},{user_id: 734623, username: 'tommy', points: 7},{user_id: 67236, username: 'nubnub', points: 1},{user_id: 235789342, username: 'samuel', points: 3}])
+    // setUsers([{user_id: 12335, username: 'bob', points: 5},{user_id: 35790, username: 'sarah', points: 12},{user_id: 734623, username: 'tommy', points: 7},{user_id: 67236, username: 'nub nub', points: 1},{user_id: 235789342, username: 'samuel', points: 3}])
   }, []);
 
+  // Loading message to be rendered while the fetching is not yet complete
   function loading() {
     return (
       <tr><td colSpan="5">Loading...</td></tr>
     )
   }
 
+  // A sorting function designed to sort the users by their Discord Ids
   function sortById(e) {
+    // Stop the button from refreshing the page
     e.preventDefault();
+    // Create a new array of users and sort that by having the lower user ids be lower in index.
     let sortedUsers = [].concat(users).sort((a, b) => {
       return parseInt(a.user_id) - parseInt(b.user_id);
     });
+    // Set the users state to this new sorted array
     setUsers(sortedUsers);
   }
 
+  // A sorting function designed to sort the users by their usernames
   function sortByUsername(e) {
+    // Stop the button from refreshing the page
     e.preventDefault();
+    // Create a new array of users and sort that by comparing the words of the usernames. This is actually case insensitive.    
     let sortedUsers = [].concat(users).sort((a, b) => {
       return a.username.localeCompare(b.username);
     });
+    // Set the users state to this new sorted array
     setUsers(sortedUsers);
   }
 
-  const deleteUser = async (event, user_id, index) => {
+  // Deletes a user from the database
+  const deleteUser = async (event, user_id) => {
+    // Stop the button from refreshing the page    
     event.preventDefault()
+    // Asks for confirmation before ending someones career
     const confirmation = window.confirm("are you sure you want to ruin this man's whole career?")
+    // If confirmed, deletes the user permanently and updates the users state 
     if (confirmation) {
       await dataAPI.delete(`/${user_id}`)
       getAllUsers()
     }
   }
 
+  // Applies a filter to the users state based on which search by drop down is selected and what the user puts into the search bar.
   function updateFilter(e) {
+    // Sets the filter state, however the filter state can not be used on the same tic it is set without problems
+    // So the e.target.value is used instead for the rest of this function
     setFilter(e.target.value)
     if (searchBy === 'Username') {
+      // Updates the filtered users state
       setFilteredUsers(users.filter(user => user.username.includes(e.target.value)))
     }
     else if (searchBy === 'ID') {
+      // Updates the filtered users state
       setFilteredUsers(users.filter(user => user.user_id.includes(e.target.value)))
     }
   }
 
+  // Sets the search by state to value selected in the drop down.
   function updateSearchBy(value){
     setSearchBy(value)
   }
 
+  // Renders a row of data for each user.
   function renderData(data) {
     return (data.map((user, index) => {
+      // Deconstructs the user object into the Id and Username
       const { user_id, username} = user
       return (
+        // Index of the use in the users array used as a unique key for that user's row.
         <tr key={index}>
           <td>{user_id}</td>
           <td>{username}</td>
-          <td><button onClick={(event) => deleteUser(event, user_id, index)}>X</button></td>
+          {/* Adds a button for deleting the user detailed in this row  */}
+          <td><button onClick={(event) => deleteUser(event, user_id)}>X</button></td>
         </tr>
       )
     }))
