@@ -1,8 +1,8 @@
-require('dotenv').config()
 import React from 'react';
 import {Redirect } from 'react-router-dom'
 import cookie from 'react-cookie'
 
+require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
 function TakeParams(props) {
