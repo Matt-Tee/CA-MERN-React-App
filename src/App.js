@@ -22,7 +22,10 @@ function App() {
       <Route {...rest} render={props => authed ? (
         <Component {...props} />
       ) : (
-        <Link to="/api/discord/login"><DiscordButton /></Link>
+        <div>
+          <GreenbotNavbar />
+          <Link to="/api/discord/login"><DiscordButton /></Link>
+        </div>
       )
     } /> )
   }
@@ -33,7 +36,7 @@ function App() {
 
   return (
     <Router>
-      <Route path="/" component={GreenbotNavbar} />
+      <PrivateRoute path="/" component={GreenbotNavbar} />
       <PrivateRoute path="/point_tables" component={Points} />
       <PrivateRoute path="/logs" component={Logs} />
       <PrivateRoute path="/administrators" component={Administrators} />
