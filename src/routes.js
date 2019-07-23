@@ -10,7 +10,7 @@ import DiscordButton from './components/DiscordButton'
 
 function PrivateRoute({ component: Component, ...rest }) {
   return (
-    <Route {...rest} render={props => authed ? (
+    <Route {...rest} render={props => props.authed ? (
       <Component {...props} />
     ) : (
       <div>
