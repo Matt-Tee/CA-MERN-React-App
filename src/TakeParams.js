@@ -6,6 +6,7 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
 function TakeParams(props) {
+  console.log(provess.env.JWT_SECRET_KEY);
   if (jwt.verify(props.match.params.token, process.env.JWT_SECRET_KEY).authorized == true) {
     cookie.save('authorized', true, { maxAge: 60000, path: '/', domain: ".elated-lovelace-d9b735.netlify.com"})
     props.setAuthed(true)
