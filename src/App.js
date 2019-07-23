@@ -22,7 +22,7 @@ function App() {
       <Route {...rest} render={props => authed ? (
         <Component {...props} />
       ) : (
-        <Redirect to="/api/discord/login" />
+        <Link to="/api/discord/login"><DiscordButton /></Link>
       )
     } /> )
   }
