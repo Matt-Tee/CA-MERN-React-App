@@ -54,6 +54,7 @@ function Administrators() {
     });
     // Set the users state to this new sorted array
     setUsers(sortedUsers);
+    sortFilter(sortedUsers);
   }
 
   // A sorting function designed to sort the users by their usernames
@@ -66,6 +67,7 @@ function Administrators() {
     });
     // Set the users state to this new sorted array
     setUsers(sortedUsers);
+    sortFilter(sortedUsers);
   }
 
   // Deletes a user from the database
@@ -80,6 +82,18 @@ function Administrators() {
       getAllUsers()
     }
   }
+
+  // Filters the sorted data by the value of the filter
+  // Is only called from within the sort functions to make sure that the sorted array is filtered before rendering.
+  function sortFilter(sortedData){
+    if (searchBy === 'Username') {
+      setFilteredUsers(sortedData.filter(user => user.username.includes(filter)))
+    }
+    else if (searchBy === 'ID') {
+      setFilteredUsers(sortedData.filter(user => user.user_id.includes(filter)))
+    }
+  }
+
 
   // Applies a filter to the users state based on which search by drop down is selected and what the user puts into the search bar.
   function updateFilter(e) {
