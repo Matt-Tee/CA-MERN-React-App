@@ -14,7 +14,7 @@ function readCookie() {
 }
 
 function App() {
-  const [authed, setAuthed] = useState(readCookie)
+  const [authed, setAuthed] = useState(true)
 
   const setNewAuthed = (isAuthed) => {
     setAuthed(isAuthed)
