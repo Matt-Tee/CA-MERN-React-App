@@ -3,11 +3,17 @@ import { Container, Section, Table, Button, Field, Control, Input, Label, Select
 import axios from 'axios';
 import NewUser from './NewUser'
 require('dotenv').config()
+const jwt = require('jsonwebtoken')
 
-let dataAPI = axios.create({ baseURL: process.env.REACT_APP_BASE_URL });
-dataAPI.defaults.headers.common["Content-Type"] = 'application/json'
-// dataAPI.defaults.headers.common["Access"] = 'application/json'
 
+let dataAPI = axios.create({
+  baseURL: process.env.REACT_APP_BASE_URL,
+  headers: {
+    common: {
+      Authorization: jwt.sign('authed', 'superSecretKey'),
+      ContentType: 'application/json'
+    }
+  }});
 
 // const dataAPI = axios.create({ baseURL: 'http://localhost:5000/authUsers' });
 
