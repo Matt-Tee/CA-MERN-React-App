@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios';
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
@@ -12,5 +13,4 @@ let dataAPI = axios.create({
   }
 });
 
-
-module.exports.dataAPI = dataAPI
+export default dataAPI
