@@ -13,4 +13,4 @@ let dataAPI = axios.create({
 });
 
 
-module.expors = dataAPI
+module.exports = dataAPI
