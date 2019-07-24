@@ -8,7 +8,8 @@ let dataAPI = axios.create({
   headers: {
     common: {
       Authorization: jwt.sign({
-      authed: true}, 'superSecretKey'),
+      authed: true
+    }, 'superSecretKey'),
       ContentType: 'application/json'
     }
   }
