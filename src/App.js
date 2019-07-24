@@ -7,6 +7,7 @@ import TakeParams from './TakeParams'
 import Administrators from './components/Administrators'
 import DiscordButton from './components/DiscordButton'
 import cookie from 'react-cookie'
+require('dotenv').config()
 
 
 function readCookie() {
@@ -46,7 +47,7 @@ function App() {
       <PrivateRoute path="/administrators" component={Administrators} />
       <Route exact path='/api/discord/login' render={() => (
         <div style={{display: 'none'}}>
-          {window.location = `https://stormy-tundra-35633.herokuapp.com/api/discord/login`}
+          {window.location = `${process.env.REACT_APP_BASE_URL}/api/discord/login`}
         </div>
       )}/>
       <Route path="/api/discord/confirmed/:token" render={(props) => <TakeParams {...props} setAuthed={setNewAuthed} /> } />

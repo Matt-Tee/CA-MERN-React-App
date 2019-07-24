@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Section, Table, Button, Field, Control, Input, Label, Select } from 'bloomer';
-import axios from 'axios';
 import NewUser from './NewUser'
-
-// Create an axios default to use for this component
-let dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/AuthUsers' });
-dataAPI.defaults.headers.common["Content-Type"] = 'application/json'
-// dataAPI.defaults.headers.common["Access"] = 'application/json'
-
-// For localhost testing of entire stack
-// const dataAPI = axios.create({ baseURL: 'http://localhost:5000/authUsers' });
-
+import dataAPI from '../modules/dataAPI'
 
 function Administrators() {
 

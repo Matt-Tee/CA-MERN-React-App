@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Field, Control, Input, Label, Select, Section, Container } from 'bloomer';
-import axios from 'axios';
-const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/' });
+import dataAPI from '../modules/dataAPI'
 
 export default function Logs() {
   // Allows the following states to be used within this functional component

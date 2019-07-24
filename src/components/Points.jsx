@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Section, Table, Button, Field, Control, Input, Label, Select } from 'bloomer';
 import NewUser from './NewUser'
-import axios from 'axios';
-
-let dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com' });
-dataAPI.defaults.headers.common["Content-Type"] = 'application/json'
-
-
+import dataAPI from '../modules/dataAPI'
 
 export default function Points() {
 

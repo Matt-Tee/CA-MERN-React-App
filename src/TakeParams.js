@@ -1,12 +1,13 @@
 import React from 'react';
 import {Redirect } from 'react-router-dom'
 import cookie from 'react-cookie'
+require('dotenv').config()
 
 const jwt = require('jsonwebtoken')
 
 function TakeParams(props) {
   if (jwt.verify(props.match.params.token, 'superSecretKey').authorized == true) {
-    cookie.save('authorized', true, { maxAge: 60000, path: '/', domain: ".elated-lovelace-d9b735.netlify.com"})
+    cookie.save('authorized', true, { maxAge: 60000, path: '/', domain: process.env.REACT_APP_COOKIE_DESTINATION})
     props.setAuthed(true)
     return (
       <Redirect to='/point_tables' />
