@@ -4,29 +4,39 @@ import axios from 'axios';
 const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/' });
 
 export default function Logs() {
+  // Allows the following states to be used within this functional component
   const [logs, setLogs] = useState(null)
   const [filter, setFilter] = useState('')
   const [filteredLogs, setFilteredLogs] = useState(null)
   const [searchBy, setSearchBy] = useState('User ID')
-  const [filteredBy, setFilteredBy] = useState('All')
+  //  Filter by action feature currently not working and is not a core feature.
+  // const [filteredBy, setFilteredBy] = useState('All')
 
+  // When component successfully mounts fetch the logs
   useEffect(() => {
     dataAPI.get('/logs').then(response => {
+      // Sort the retrieved logs by their time
+      // This is necessary since mongo stores them in reverse order
       let sortedLogs = response.data.sort((a, b) => {
         return parseInt(new Date(b.time).getTime()) - parseInt(new Date(a.time).getTime());
       });
+      // Set the log states to the new logs
       setLogs(sortedLogs);
       setFilteredLogs(sortedLogs);
     })
   }, []);
 
+  // Loading message to be rendered while the fetching is not yet complete
   function loading() {
     return (
       <tr><td colSpan="3">Loading...</td></tr>
     )
   }
 
+  // Applies a filter to the logs state based on which search by drop down is selected and what the user puts into the search bar.
   function updateFilter(e) {
+    // Sets the filter state, however the filter state can not be used on the same tic it is set without problems
+    // So the e.target.value is used instead for the rest of this function
     setFilter(e.target.value)
     if (searchBy === 'User ID') {
       setFilteredLogs(logs.filter(log => log.user.includes(e.target.value)))
@@ -36,21 +46,22 @@ export default function Logs() {
     }
   }
   
-  function updateFilteredBy(value) {
-    setFilteredBy(value)
-  }
+  // function updateFilteredBy(value) {
+  //   setFilteredBy(value)
+  // }
 
+  // Sets the search by state to value selected in the drop down.
   function updateSearchBy(value) {
     setSearchBy(value)
   }
 
+  // Renders a row for each log entry
   function renderData(data) {
-    console.log(data)
-    let dataToRender = data
-     if (!filteredBy == 'All') {dataToRender = data.filter(d => d.action.includes(filteredBy.toLowerCase()))}
-     return (dataToRender.map((log, index) => {
+     return (data.map((log, index) => {
+      // Deconstructs the log object into its time, action and user
       var { time, action, user } = log
       return (
+        // Index of the log in the logs array used as a unique key for that log's row.
         <tr key={index}>
           <td>{new Date(time).toUTCString()}</td>
           <td>{action}</td>
@@ -74,7 +85,7 @@ export default function Logs() {
           </Select>
         </Control>
       </Field>
-      <Field isGrouped>
+      {/* <Field isGrouped>
         <Label>Actions:</Label>
         <Control>
           <Select value={filteredBy} onChange={(e) => updateFilteredBy(e.target.value)}>
@@ -84,7 +95,7 @@ export default function Logs() {
             <option>Delete</option>
           </Select>
         </Control>
-      </Field>
+      </Field> */}
       <Table isBordered isStriped>
         <thead>
           <tr>
@@ -94,6 +105,7 @@ export default function Logs() {
           </tr>
         </thead>
         <tbody>
+        {/* Checks if the logs are loaded yet and either renders loading or the logs as appropriate */}
           {!filteredLogs ? loading() : renderData(filteredLogs)}
         </tbody>
       </Table>
