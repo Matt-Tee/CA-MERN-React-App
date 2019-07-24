@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Field, Label, FieldBody, Control, Input, Button } from 'bloomer'
 import 'bulma'
-let dataAPI = require('../modules/dataAPI')
+import dataAPI from '../modules/dataAPI'
 
 function NewUser(props) {
 

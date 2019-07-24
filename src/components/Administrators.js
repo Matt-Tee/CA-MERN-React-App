@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Section, Table, Button, Field, Control, Input, Label, Select } from 'bloomer';
 import NewUser from './NewUser'
-let dataAPI = require('../modules/dataAPI')
+import dataAPI from '../modules/dataAPI'
 
 // const dataAPI = axios.create({ baseURL: 'http://localhost:5000/authUsers' });
 function Administrators() {

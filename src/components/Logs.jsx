@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Field, Control, Input, Label, Select, Section, Container } from 'bloomer';
-let dataAPI = require('../modules/dataAPI')
+import dataAPI from '../modules/dataAPI'
 
 export default function Logs() {
   const [logs, setLogs] = useState(null)
