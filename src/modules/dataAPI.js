@@ -7,7 +7,8 @@ let dataAPI = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
   headers: {
     common: {
-      Authorization: jwt.sign('authed', 'superSecretKey'),
+      Authorization: jwt.sign({
+      authed: true}, 'superSecretKey'),
       ContentType: 'application/json'
     }
   }
