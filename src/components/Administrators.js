@@ -69,7 +69,7 @@ function Administrators() {
     const confirmation = window.confirm("are you sure you want to ruin this man's whole career?")
     // If confirmed, deletes the user permanently and updates the users state
     if (confirmation) {
-      await dataAPI.delete(`/${user_id}`)
+      await dataAPI.delete(`/authUsers/${user_id}`)
       getAllUsers()
     }
   }
