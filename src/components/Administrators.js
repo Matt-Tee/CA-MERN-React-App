@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Container, Section, Table, Button, Field, Control, Input, Label, Select } from 'bloomer';
 import axios from 'axios';
 import NewUser from './NewUser'
+require('dotenv').config()
 
-let dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/AuthUsers' });
+let dataAPI = axios.create({ baseURL: process.env.REACT_APP_BASE_URL });
 dataAPI.defaults.headers.common["Content-Type"] = 'application/json'
 // dataAPI.defaults.headers.common["Access"] = 'application/json'
 

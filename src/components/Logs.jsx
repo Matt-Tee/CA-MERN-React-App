@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Field, Control, Input, Label, Select, Section, Container } from 'bloomer';
 import axios from 'axios';
-const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/' });
+require('dotenv').config()
+
+const dataAPI = axios.create({ baseURL: process.env.REACT_APP_BASE_URL });
 
 export default function Logs() {
   const [logs, setLogs] = useState(null)

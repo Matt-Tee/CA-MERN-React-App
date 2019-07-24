@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 
 function TakeParams(props) {
   if (jwt.verify(props.match.params.token, 'superSecretKey').authorized == true) {
-    cookie.save('authorized', true, { maxAge: 60000, path: '/', domain: ".elated-lovelace-d9b735.netlify.com"})
+    cookie.save('authorized', true, { maxAge: 60000, path: '/', domain: ".serene-crag-19981.herokuapp.com"})
     props.setAuthed(true)
     return (
       <Redirect to='/point_tables' />
