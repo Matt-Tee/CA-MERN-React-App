@@ -1,23 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Section, Table, Button, Field, Control, Input, Label, Select } from 'bloomer';
-import axios from 'axios';
 import NewUser from './NewUser'
-require('dotenv').config()
-const jwt = require('jsonwebtoken')
-
-
-let dataAPI = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
-  headers: {
-    common: {
-      Authorization: jwt.sign('authed', 'superSecretKey'),
-      ContentType: 'application/json'
-    }
-  }});
+let dataAPI = require('../modules/dataAPI')
 
 // const dataAPI = axios.create({ baseURL: 'http://localhost:5000/authUsers' });
-
-
 function Administrators() {
 
   const [users, setUsers] = useState(null)

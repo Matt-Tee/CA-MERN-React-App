@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Field, Control, Input, Label, Select, Section, Container } from 'bloomer';
-import axios from 'axios';
-require('dotenv').config()
-
-const dataAPI = axios.create({ baseURL: process.env.REACT_APP_BASE_URL });
+let dataAPI = require('../modules/dataAPI')
 
 export default function Logs() {
   const [logs, setLogs] = useState(null)
