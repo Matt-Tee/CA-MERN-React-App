@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Field, Control, Input, Label, Select } from 'bloomer';
+import { Table, Field, Control, Input, Label, Select, Section, Container } from 'bloomer';
 import axios from 'axios';
 const dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com/' });
 
@@ -44,8 +44,7 @@ export default function Logs() {
     else if (searchBy === 'Time') {
       setFilteredLogs(logs.filter(log => (new Date(log.time).toUTCString()).includes(e.target.value)))
     }
-  }
-  
+  }  
   // function updateFilteredBy(value) {
   //   setFilteredBy(value)
   // }
@@ -72,43 +71,45 @@ export default function Logs() {
   }
 
   return (
-    <div>
-      <Field isGrouped>
-        <Control>
-          <Input type="text" value={filter} onChange={(e) => updateFilter(e)} />
-        </Control>
-        <Label>Search by:</Label>
-        <Control>
-          <Select value={searchBy} onChange={(e) => updateSearchBy(e.target.value)}>
-            <option>User ID</option>
-            <option>Time</option>
-          </Select>
-        </Control>
-      </Field>
-      {/* <Field isGrouped>
-        <Label>Actions:</Label>
-        <Control>
-          <Select value={filteredBy} onChange={(e) => updateFilteredBy(e.target.value)}>
-            <option>All</option>
-            <option>New</option>
-            <option>Update</option>
-            <option>Delete</option>
-          </Select>
-        </Control>
-      </Field> */}
-      <Table isBordered isStriped>
-        <thead>
-          <tr>
-            <th >Time</th>
-            <th>Action</th>
-            <th>User</th>
-          </tr>
-        </thead>
-        <tbody>
-        {/* Checks if the logs are loaded yet and either renders loading or the logs as appropriate */}
-          {!filteredLogs ? loading() : renderData(filteredLogs)}
-        </tbody>
-      </Table>
-    </div>
+    <Section>
+      <Container>
+        <Field isGrouped>
+          <Control>
+            <Input type="text" value={filter} onChange={(e) => updateFilter(e)} />
+          </Control>
+          <Label>Search by:</Label>
+          <Control>
+            <Select value={searchBy} onChange={(e) => updateSearchBy(e.target.value)}>
+              <option>User ID</option>
+              <option>Time</option>
+            </Select>
+          </Control>
+        </Field>
+        {/* <Field isGrouped>
+          <Label>Actions:</Label>
+          <Control>
+            <Select value={filteredBy} onChange={(e) => updateFilteredBy(e.target.value)}>
+              <option>All</option>
+              <option>New</option>
+              <option>Update</option>
+              <option>Delete</option>
+            </Select>
+          </Control>
+        </Field> */}
+        <Table isBordered isStriped>
+          <thead>
+            <tr>
+              <th >Time</th>
+              <th>Action</th>
+              <th>User</th>
+            </tr>
+          </thead>
+          <tbody>
+          {/* Checks if the logs are loaded yet and either renders loading or the logs as appropriate */}
+            {!filteredLogs ? loading() : renderData(filteredLogs)}
+          </tbody>
+        </Table>
+      </Container>
+    </Section>
   );
 }

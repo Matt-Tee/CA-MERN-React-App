@@ -9,7 +9,7 @@ function TakeParams(props) {
     cookie.save('authorized', true, { maxAge: 60000, path: '/', domain: ".elated-lovelace-d9b735.netlify.com"})
     props.setAuthed(true)
     return (
-      <Redirect to='/' />
+      <Redirect to='/point_tables' />
     )
   } else {
     return (
