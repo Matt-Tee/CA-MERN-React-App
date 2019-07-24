@@ -13,7 +13,7 @@ function Administrators() {
 
   // Fetch all user data
   const getAllUsers = () => {
-    dataAPI.get('/')
+    dataAPI.get('/authUsers')
       .then(response => {
         setUsers(response.data);
         setFilteredUsers(response.data)
@@ -52,7 +52,7 @@ function Administrators() {
   function sortByUsername(e) {
     // Stop the button from refreshing the page
     e.preventDefault();
-    // Create a new array of users and sort that by comparing the words of the usernames. This is actually case insensitive.    
+    // Create a new array of users and sort that by comparing the words of the usernames. This is actually case insensitive.
     let sortedUsers = [].concat(users).sort((a, b) => {
       return a.username.localeCompare(b.username);
     });
@@ -63,11 +63,11 @@ function Administrators() {
 
   // Deletes a user from the database
   const deleteUser = async (event, user_id) => {
-    // Stop the button from refreshing the page    
+    // Stop the button from refreshing the page
     event.preventDefault()
     // Asks for confirmation before ending someones career
     const confirmation = window.confirm("are you sure you want to ruin this man's whole career?")
-    // If confirmed, deletes the user permanently and updates the users state 
+    // If confirmed, deletes the user permanently and updates the users state
     if (confirmation) {
       await dataAPI.delete(`/${user_id}`)
       getAllUsers()
