@@ -3,7 +3,7 @@ import { Field, Label, FieldBody, Control, Input, Button } from 'bloomer'
 import 'bulma'
 import axios from 'axios'
 
-let dataAPI = axios.create({ baseURL: 'https://stormy-tundra-35633.herokuapp.com' });
+let dataAPI = axios.create({ baseURL: process.env.REACT_APP_BASE_URL });
 dataAPI.defaults.headers.common["Content-Type"] = 'application/json'
 
 
