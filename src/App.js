@@ -16,7 +16,7 @@ function readCookie() {
 
 
 function App() {
-  const [authed, setAuthed] = useState(readCookie)
+  const [authed, setAuthed] = useState(useCookie)
 
   function PrivateRoute({ component: Component, ...rest }) {
     return (
