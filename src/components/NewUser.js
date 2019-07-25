@@ -50,7 +50,7 @@ function NewUser(props) {
         </Field>
       </FieldBody>
       <Control>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button type='submit'>Submit</Button>
       </Control>
     </form>
   )
