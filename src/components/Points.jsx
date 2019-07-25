@@ -16,6 +16,7 @@ export default function Points() {
   const getAllUsers = () => {
     dataAPI.get('/')
       .then(response => {
+        setNewPoints(response.data.map(x => ''))
         setUsers(response.data);
         setFilteredUsers(response.data)
       }
