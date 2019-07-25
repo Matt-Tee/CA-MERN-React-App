@@ -1,4 +1,4 @@
-import React, {useState, Component, Fragment} from 'react';
+import React, {useState, Fragment} from 'react';
 import Points from './components/Points';
 import Logs from './components/Logs';
 import { Route, BrowserRouter as Router, Link, Redirect  } from 'react-router-dom'
