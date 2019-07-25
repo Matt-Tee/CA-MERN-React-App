@@ -10,7 +10,6 @@ function NewUser(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    console.log(dataAPI.defaults.baseURL);
     dataAPI.post(`/${props.uri}`, {
       user_id: userId,
       username: username,
@@ -18,6 +17,8 @@ function NewUser(props) {
     }).then(response => {
       // send a refresh here
       props.getAllUsers()
+      setUserId('')
+      setUsername('')
       })
       .catch(error => {
         console.log(error);
@@ -51,7 +52,7 @@ function NewUser(props) {
         </Field>
       </FieldBody>
       <Control>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button type='submit'>Submit</Button>
       </Control>
     </form>
   )

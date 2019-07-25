@@ -16,6 +16,7 @@ export default function Points() {
   const getAllUsers = () => {
     dataAPI.get('/')
       .then(response => {
+        setNewPoints(response.data.map(x => ''))
         setUsers(response.data);
         setFilteredUsers(response.data)
       }
@@ -69,7 +70,7 @@ export default function Points() {
   function sortByUsername(e) {
     // Stop the button from refreshing the page
     e.preventDefault();
-    // Create a new array of users and sort that by comparing the words of the usernames. This is actually case insensitive.    
+    // Create a new array of users and sort that by comparing the words of the usernames. This is actually case insensitive.
     let sortedUsers = [].concat(users).sort((a, b) => {
       return a.username.localeCompare(b.username);
     });
@@ -81,26 +82,26 @@ export default function Points() {
 
   // Deletes a user from the database
   const deleteUser = async (event, user_id) => {
-    // Stop the button from refreshing the page    
+    // Stop the button from refreshing the page
     event.preventDefault()
     // Asks for confirmation before ending someones career
     const confirmation = window.confirm("are you sure you want to ruin this man's whole career?")
-    // If confirmed, deletes the user permanently and updates the users state 
+    // If confirmed, deletes the user permanently and updates the users state
     if (confirmation) {
       await dataAPI.delete(`/users/${user_id}`)
       getAllUsers()
     }
   }
-  
+
   // Updates the points of a user to the input amount and updates the users state.
   const updatePoints = async (event, index, user_id,) => {
-    // Stop the button from refreshing the page    
+    // Stop the button from refreshing the page
     event.preventDefault()
     // Since the API takes in an amount to add or subtract from the points database, some maths happens first to make sure the amount typed is the amount the points are set to.
     await dataAPI.patch(`/users/${user_id}/points`, {
       points: ((0-users[index].points) + parseInt(newPoints[index]))
     })
-    // Update the user state 
+    // Update the user state
     getAllUsers()
   }
 
@@ -108,7 +109,7 @@ export default function Points() {
   const handleChange = (event, index) => {
     // Makes an array out of the newPoints state for ease of editing
     let state = [...newPoints]
-    // Changes the value of the new points that match the index of the user it was entered for 
+    // Changes the value of the new points that match the index of the user it was entered for
     state[index] = event.target.value
     // Update the state with the new changes
     setNewPoints(state)
