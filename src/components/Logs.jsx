@@ -43,7 +43,7 @@ export default function Logs() {
     else if (searchBy === 'Time') {
       setFilteredLogs(logs.filter(log => (new Date(log.time).toUTCString()).includes(e.target.value)))
     }
-  }  
+  }
   // function updateFilteredBy(value) {
   //   setFilteredBy(value)
   // }
@@ -57,13 +57,14 @@ export default function Logs() {
   function renderData(data) {
      return (data.map((log, index) => {
       // Deconstructs the log object into its time, action and user
-      var { time, action, user } = log
+      var { time, action, user, extra } = log
       return (
         // Index of the log in the logs array used as a unique key for that log's row.
         <tr key={index}>
           <td>{new Date(time).toUTCString()}</td>
           <td>{action}</td>
           <td>{user}</td>
+          <td>{extra}</td>
         </tr>
       )
     }))
@@ -101,6 +102,7 @@ export default function Logs() {
               <th >Time</th>
               <th>Action</th>
               <th>User</th>
+              <th>Comments</th>
             </tr>
           </thead>
           <tbody>
