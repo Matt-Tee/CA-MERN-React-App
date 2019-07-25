@@ -17,6 +17,8 @@ function NewUser(props) {
     }).then(response => {
       // send a refresh here
       props.getAllUsers()
+      setUserId('')
+      setUsername('')
       })
       .catch(error => {
         console.log(error);
