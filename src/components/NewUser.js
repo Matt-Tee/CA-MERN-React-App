@@ -10,7 +10,6 @@ function NewUser(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    console.log(dataAPI.defaults.baseURL);
     dataAPI.post(`/${props.uri}`, {
       user_id: userId,
       username: username,
